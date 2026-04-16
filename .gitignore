@@ -13,3 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+# Rác hệ thống và log
+*.log
+.idea/
+.gradle/
+build/
+local.properties
