@@ -39,6 +39,18 @@ public class MainActivity extends BaseSensorActivity {
         findViewById(R.id.btnNavCamera).setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, PostActivity.class));
         });
+        findViewById(R.id.home).setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, MainActivity.class));
+        });
+        findViewById(R.id.friend).setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, BanBe.class));
+        });
+        findViewById(R.id.btnNavChat).setOnClickListener(v -> {
+            //startActivity(new Intent(MainActivity.this, Chat.class));
+        });
+        findViewById(R.id.btnNavProfile).setOnClickListener(v -> {
+            //startActivity(new Intent(MainActivity.this, Profile.class));
+        });
     }
 
     private void loadPosts() {
