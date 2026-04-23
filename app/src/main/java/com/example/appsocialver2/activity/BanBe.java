@@ -64,10 +64,6 @@ public class BanBe extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
-        friend.setOnClickListener(v -> {
-            Intent intent = new Intent(this, BanBe.class);
-            startActivity(intent);
-        });
         camera.setOnClickListener(v -> {
             Intent intent = new Intent(this, PostActivity.class);
             startActivity(intent);
@@ -84,25 +80,34 @@ public class BanBe extends AppCompatActivity {
     private void loadRequests() {
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        requestList.clear();
-
         db.collection("friend_requests")
                 .whereEqualTo("toUserId", currentUserId)
-                .get()
-                .addOnSuccessListener(query -> {
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        return;
+                    }
 
-                    for (DocumentSnapshot doc : query) {
+                    requestList.clear();
 
+                    // Nếu không có yêu cầu kết bạn nào
+                    if (value == null || value.isEmpty()) {
+                        requestAdapter.notifyDataSetChanged();
+                        return;
+                    }
+
+                    // Duyệt qua danh sách các yêu cầu
+                    for (DocumentSnapshot doc : value.getDocuments()) {
                         String fromId = doc.getString("fromUserId");
 
+                        // Lấy thông tin chi tiết của người gửi từ collection "users"
                         db.collection("users").document(fromId)
                                 .get()
                                 .addOnSuccessListener(userDoc -> {
                                     if (userDoc.exists()) {
-
                                         String email = userDoc.getString("email");
                                         String tendn = userDoc.getString("tendn");
                                         String avatar = userDoc.getString("avatar");
+
                                         requestList.add(new User(fromId, email, tendn, avatar));
                                         requestAdapter.notifyDataSetChanged();
                                     }
@@ -113,17 +118,17 @@ public class BanBe extends AppCompatActivity {
     private void loadFriends() {
 
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        friendList.clear();
-
         db.collection("friends")
                 .document(currentUserId)
                 .collection("list")
-                .get()
-                .addOnSuccessListener(query -> {
-
-                    for (DocumentSnapshot doc : query) {
-
+                .addSnapshotListener((value, error)  -> {
+                    if (error != null) return;
+                    friendList.clear();
+                    if (value == null || value.isEmpty()) {
+                        friendAdapter.notifyDataSetChanged();
+                        return;
+                    }
+                    for (DocumentSnapshot doc : value.getDocuments()) {
                         String friendId = doc.getId();
 
                         db.collection("users").document(friendId)
