@@ -31,7 +31,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         this.context = context;
         db = FirebaseFirestore.getInstance();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
         ImageView imgAvatar;

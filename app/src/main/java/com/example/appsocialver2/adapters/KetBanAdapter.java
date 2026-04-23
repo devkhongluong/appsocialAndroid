@@ -74,9 +74,8 @@ public class KetBanAdapter extends RecyclerView.Adapter<KetBanAdapter.ViewHolder
         holder.btnAdd.setEnabled(true);
         holder.btnAdd.setText("Kết bạn");
         // Đặt màu mặc định (ví dụ màu xanh)
-        holder.btnAdd.setBackgroundColor(context.getResources().getColor(android.R.color.holo_blue_dark));
 
-        // 1. Nếu là chính mình -> Ẩn nút
+
         if (user.userId.equals(currentUserId)) {
             holder.btnAdd.setVisibility(View.GONE);
             return;
@@ -86,7 +85,7 @@ public class KetBanAdapter extends RecyclerView.Adapter<KetBanAdapter.ViewHolder
         if (friendIds != null && friendIds.contains(user.userId)) {
             holder.btnAdd.setText("Bạn bè");
             holder.btnAdd.setEnabled(false);
-            holder.btnAdd.setBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
+
             return;
         }
 
@@ -94,7 +93,7 @@ public class KetBanAdapter extends RecyclerView.Adapter<KetBanAdapter.ViewHolder
         if (requestedIds != null && requestedIds.contains(user.userId)) {
             holder.btnAdd.setText("Đã gửi");
             holder.btnAdd.setEnabled(false);
-            holder.btnAdd.setBackgroundColor(context.getResources().getColor(android.R.color.holo_orange_dark));
+
             return;
         }
 

@@ -91,6 +91,7 @@
                     android:layout_height="50dp"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/bg_button"
+                    app:backgroundTint="@null"
                     android:text="Gửi mã"
                     android:textColor="@android:color/white" />
             </LinearLayout>
@@ -217,6 +218,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_button"
+                app:backgroundTint="@null"
                 android:text="Đăng ký"
                 android:textColor="@android:color/white" />
 
