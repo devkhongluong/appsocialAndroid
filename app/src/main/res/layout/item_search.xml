@@ -33,6 +33,7 @@
             android:layout_height="46dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_button"
+            app:backgroundTint="@null"
             android:text="Kết bạn"
             app:layout_constraintBottom_toBottomOf="@id/imgAvatar"
             app:layout_constraintEnd_toEndOf="parent"

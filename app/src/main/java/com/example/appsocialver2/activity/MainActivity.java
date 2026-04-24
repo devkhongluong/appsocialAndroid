@@ -3,11 +3,15 @@ package com.example.appsocialver2.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appsocialver2.Models.Post;
 import com.example.appsocialver2.R;
+import com.example.appsocialver2.adapters.PostAdapter;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ public class MainActivity extends BaseSensorActivity {
     private RecyclerView rvPosts;
     private List<Post> postList;
     private FirebaseFirestore db;
+    private PostAdapter postAdapter;
     private View privacyOverlay;
 
     @Override
@@ -24,18 +29,20 @@ public class MainActivity extends BaseSensorActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Khởi tạo UI và Firebase [cite: 18, 109]
+        // Khởi tạo UI và Firebase
         db = FirebaseFirestore.getInstance();
         rvPosts = findViewById(R.id.rvPosts);
         privacyOverlay = findViewById(R.id.privacyOverlay);
 
         postList = new ArrayList<>();
+        postAdapter = new PostAdapter(postList, this);
+        rvPosts.setAdapter(postAdapter);
         rvPosts.setLayoutManager(new LinearLayoutManager(this));
 
-        // Load bài viết từ Firestore theo thời gian thực [cite: 36, 190]
+        // Load bài viết từ Firestore theo thời gian thực
         loadPosts();
 
-        // Nút Camera điều hướng sang PostActivity [cite: 133, 224]
+        // Nút Camera điều hướng sang PostActivity
         findViewById(R.id.btnNavCamera).setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, PostActivity.class));
         });
@@ -49,7 +56,7 @@ public class MainActivity extends BaseSensorActivity {
             //startActivity(new Intent(MainActivity.this, Chat.class));
         });
         findViewById(R.id.btnNavProfile).setOnClickListener(v -> {
-            //startActivity(new Intent(MainActivity.this, Profile.class));
+            startActivity(new Intent(MainActivity.this, CaNhanActivity.class));
         });
     }
 
@@ -57,9 +64,20 @@ public class MainActivity extends BaseSensorActivity {
         db.collection("Posts")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Toast.makeText(this, "Lỗi tải bài viết", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if (value != null) {
                         postList.clear();
-                        // Logic cập nhật List và Adapter ở đây [cite: 164, 165]
+                        for (DocumentSnapshot doc : value.getDocuments()) {
+                            Post post = doc.toObject(Post.class);
+                            if (post != null) {
+                                post.setPostId(doc.getId());
+                                postList.add(post);
+                            }
+                        }
+                        postAdapter.notifyDataSetChanged();
                     }
                 });
     }

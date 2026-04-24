@@ -52,6 +52,7 @@
         <activity android:name=".activity.DangKi" />
         <activity android:name=".activity.BanBe" />
         <activity android:name=".activity.KetBan" />
+        <activity android:name=".activity.CaNhanActivity" />
     </application>
 
 </manifest>

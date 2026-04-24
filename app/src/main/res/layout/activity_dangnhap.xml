@@ -109,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_button"
+                app:backgroundTint="@null"
                 android:text="Đăng nhập"
                 android:textColor="@color/white" />
 
@@ -153,6 +154,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/bg_button"
+                app:backgroundTint="@null"
                 android:text="Tạo tài khoản mới"
                 android:textColor="@color/white" />
 
