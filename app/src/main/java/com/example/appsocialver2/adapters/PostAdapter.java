@@ -65,7 +65,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     }
                 });
 
-        // Xử lý nút Like/Comment đơn giản
         holder.btnLike.setOnClickListener(v -> {
             // Xử lý tăng giảm lượt like trên Firestore
         });

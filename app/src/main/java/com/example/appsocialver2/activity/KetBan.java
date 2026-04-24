@@ -1,6 +1,7 @@
 
 package com.example.appsocialver2.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -55,6 +56,18 @@ public class KetBan extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Vui lòng nhập tên", Toast.LENGTH_SHORT).show();
             }
+        });
+        findViewById(R.id.my).setOnClickListener(v -> {
+            startActivity(new Intent(this, CaNhanActivity.class));
+        });
+        findViewById(R.id.camera).setOnClickListener(v -> {
+            startActivity(new Intent(this, PostActivity.class));
+        });
+        findViewById(R.id.home).setOnClickListener(v -> {
+            startActivity(new Intent(this, MainActivity.class));
+        });
+        findViewById(R.id.friend).setOnClickListener(v -> {
+            startActivity(new Intent(this, BanBe.class));
         });
     }
 

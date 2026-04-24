@@ -68,6 +68,10 @@ public class BanBe extends AppCompatActivity {
             Intent intent = new Intent(this, PostActivity.class);
             startActivity(intent);
         });
+        my.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CaNhanActivity.class);
+            startActivity(intent);
+        });
     }
     private void loadRequests() {
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
