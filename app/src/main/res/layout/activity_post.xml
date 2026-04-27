@@ -71,17 +71,6 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="3" />
-
-            <!-- btnPickLocation: chỉ hiện khi chọn từ thư viện -->
-            <ImageButton
-                android:id="@+id/btnPickLocation"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="6dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_edit"
-                android:visibility="gone"
-                app:tint="@android:color/white" />
         </LinearLayout>
 
         <!-- Cancel X button (top-right) -->
@@ -166,6 +155,33 @@
             android:text="ĐĂNG NGAY"
             android:textColor="@android:color/white"
             app:backgroundTint="#2196F3"
+            android:visibility="gone" />
+
+        <!-- Switch Camera Button (phải) -->
+        <ImageButton
+            android:id="@+id/btnSwitchCamera"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_popup_sync"
+            android:padding="6dp"
+            app:tint="#333333" />
+
+        <!-- Pick Location Button (phải, thay thế Switch Camera) -->
+        <ImageButton
+            android:id="@+id/btnPickLocation"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_mylocation"
+            android:padding="6dp"
+            app:tint="#333333"
             android:visibility="gone" />
 
     </RelativeLayout>
