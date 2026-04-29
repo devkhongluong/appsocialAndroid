@@ -58,7 +58,7 @@ public class MainActivity extends BaseSensorActivity {
             startActivity(new Intent(MainActivity.this, ListFriendsChatActivity.class));
         });
         findViewById(R.id.btnNavProfile).setOnClickListener(v -> {
-            //startActivity(new Intent(MainActivity.this, Profile.class));
+            startActivity(new Intent(MainActivity.this, profile.class));
         });
     }
 

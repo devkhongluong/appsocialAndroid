@@ -1,5 +1,7 @@
 package com.example.appsocialver2.activity;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
