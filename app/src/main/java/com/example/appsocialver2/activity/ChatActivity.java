@@ -22,7 +22,7 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseSensorActivity {
 
     private String receiverId, receiverName, receiverAvatar;
     private String senderId;
@@ -35,7 +35,10 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter adapter;
     private List<Message> messageList;
     private FirebaseFirestore db;
+    @Override
+    protected void onPrivacyTriggered(boolean isCovered) {
 
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,10 +96,14 @@ public class ChatActivity extends AppCompatActivity {
     private void listenMessages() {
         db.collection("chats")
                 .whereIn("senderId", java.util.Arrays.asList(senderId, receiverId))
-                .orderBy("timestamp", Query.Direction.ASCENDING)
+                // Bỏ orderBy để tránh lỗi Firebase yêu cầu tạo Composite Index
                 .addSnapshotListener((value, error) -> {
-                    if (error != null) return;
+                    if (error != null) {
+                        android.util.Log.e("ChatActivity", "Lỗi khi lấy tin nhắn", error);
+                        return;
+                    }
                     if (value != null) {
+                        boolean changed = false;
                         for (DocumentChange dc : value.getDocumentChanges()) {
                             if (dc.getType() == DocumentChange.Type.ADDED) {
                                 Message msg = dc.getDocument().toObject(Message.class);
@@ -104,10 +111,31 @@ public class ChatActivity extends AppCompatActivity {
                                 if ((msg.getSenderId().equals(senderId) && msg.getReceiverId().equals(receiverId)) ||
                                     (msg.getSenderId().equals(receiverId) && msg.getReceiverId().equals(senderId))) {
                                     messageList.add(msg);
-                                    adapter.notifyItemInserted(messageList.size() - 1);
-                                    rcvChat.scrollToPosition(messageList.size() - 1);
+                                    changed = true;
+                                }
+                            } else if (dc.getType() == DocumentChange.Type.MODIFIED) {
+                                Message msg = dc.getDocument().toObject(Message.class);
+                                for (int i = 0; i < messageList.size(); i++) {
+                                    if (messageList.get(i).getMessageId().equals(msg.getMessageId())) {
+                                        messageList.set(i, msg);
+                                        changed = true;
+                                        break;
+                                    }
                                 }
                             }
+                        }
+                        
+                        if (changed) {
+                            // Sắp xếp lại danh sách tin nhắn theo thời gian (thay cho orderBy của Firebase)
+                            java.util.Collections.sort(messageList, (m1, m2) -> {
+                                if (m1.getTimestamp() == null && m2.getTimestamp() == null) return 0;
+                                if (m1.getTimestamp() == null) return 1; // Tin nhắn mới gửi chưa có timestamp server sẽ nằm ở cuối
+                                if (m2.getTimestamp() == null) return -1;
+                                return m1.getTimestamp().compareTo(m2.getTimestamp());
+                            });
+                            
+                            adapter.notifyDataSetChanged();
+                            rcvChat.scrollToPosition(messageList.size() - 1);
                         }
                     }
                 });

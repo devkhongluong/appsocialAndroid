@@ -184,6 +184,6 @@ public class profile extends BaseSensorActivity {
         findViewById(R.id.friend).setOnClickListener(v -> startActivity(new Intent(this, BanBe.class)));
         findViewById(R.id.btnNavCamera).setOnClickListener(v -> startActivity(new Intent(this, PostActivity.class)));
         findViewById(R.id.btnNavChat).setOnClickListener(v -> startActivity(new Intent(this, ListFriendsChatActivity.class)));
-        // btnNavProfile không làm gì vì đang ở chính nó
+
     }
 }
