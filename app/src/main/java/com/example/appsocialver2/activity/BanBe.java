@@ -73,8 +73,8 @@ public class BanBe extends AppCompatActivity {
             startActivity(intent);
         });
         my.setOnClickListener(v -> {
-            // Intent intent = new Intent(this, ProfileActivity.class);
-            // startActivity(intent);
+             Intent intent = new Intent(this, profile.class);
+             startActivity(intent);
         });
     }
     private void loadRequests() {

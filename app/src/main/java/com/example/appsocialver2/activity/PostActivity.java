@@ -58,7 +58,7 @@ public class PostActivity extends BaseSensorActivity {
     private PreviewView viewFinder;
     private ImageView imgDemo;
     private EditText editDescription;
-    private TextView txtLocation;
+    private TextView txtLocation, txtLightWarning;
     private View privacyOverlay, overlayHeader;
     private ImageButton btnCapture, btnGallery, btnCancel, btnPickLocation, btnSwitchCamera;
     private ExtendedFloatingActionButton btnPost;
@@ -141,6 +141,7 @@ public class PostActivity extends BaseSensorActivity {
         imgDemo         = findViewById(R.id.imgDemo);
         editDescription = findViewById(R.id.editDescription);
         txtLocation     = findViewById(R.id.txtLocation);
+        txtLightWarning = findViewById(R.id.txtLightWarning);
         privacyOverlay  = findViewById(R.id.privacyOverlay);
         overlayHeader   = findViewById(R.id.overlayHeader);
         btnCapture      = findViewById(R.id.btnCapture);
@@ -523,9 +524,26 @@ public class PostActivity extends BaseSensorActivity {
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
             float lux = event.values[0];
             WindowManager.LayoutParams lp = getWindow().getAttributes();
-            lp.screenBrightness = (lux < 100)
-                    ? 0.9f
-                    : WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+            if (lux < 100) {
+                lp.screenBrightness = 0.9f; // Sáng thấp -> tăng sáng màn hình
+                if (txtLightWarning != null) {
+                    txtLightWarning.setVisibility(View.VISIBLE);
+                    txtLightWarning.setText("Ánh sáng yếu (" + lux + " lux)\nBạn hãy giữ chắc tay!");
+                    txtLightWarning.setTextColor(android.graphics.Color.parseColor("#FFEB3B")); // Vàng
+                }
+            } else if (lux > 1000) {
+                lp.screenBrightness = 0.2f; // Sáng cao -> giảm sáng màn hình
+                if (txtLightWarning != null) {
+                    txtLightWarning.setVisibility(View.VISIBLE);
+                    txtLightWarning.setText("Chói quá (" + lux + " lux)\nGiảm độ sáng màn hình!");
+                    txtLightWarning.setTextColor(android.graphics.Color.parseColor("#FF5252")); // Đỏ
+                }
+            } else {
+                lp.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+                if (txtLightWarning != null) {
+                    txtLightWarning.setVisibility(View.GONE);
+                }
+            }
             getWindow().setAttributes(lp);
         }
     }

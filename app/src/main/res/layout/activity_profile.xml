@@ -34,13 +34,27 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
         android:text="Tên Tài Khoản"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imgProfileAvatar"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnLogout"
         app:layout_constraintStart_toEndOf="@+id/imgProfileAvatar"
         app:layout_constraintTop_toTopOf="@+id/imgProfileAvatar" />
+
+    <!-- Nút Đăng xuất -->
+    <ImageButton
+        android:id="@+id/btnLogout"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:tint="#FF0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <!-- PHẦN 2: THỐNG KÊ (Bài viết & Bạn bè) -->
     <LinearLayout
         android:id="@+id/layoutStats"

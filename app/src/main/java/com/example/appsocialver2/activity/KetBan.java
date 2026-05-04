@@ -78,7 +78,7 @@ public class KetBan extends AppCompatActivity {
             finish();
         });
         findViewById(R.id.my).setOnClickListener(v -> {
-            // startActivity(new Intent(this, ProfileActivity.class));
+             startActivity(new android.content.Intent(this, profile.class));
         });
     }
 

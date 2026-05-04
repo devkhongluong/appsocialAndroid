@@ -36,7 +36,7 @@ public class profile extends BaseSensorActivity {
     // 1. Khai báo các View (Giao diện)
     private ImageView imgProfileAvatar;
     private TextView tvProfileName, tvPostCount, tvFriendCount;
-    private ImageButton btnEditAvatar;
+    private ImageButton btnEditAvatar, btnLogout;
     private RecyclerView rvProfileGrid;
     // 2. Khai báo Database, Adapter
     private FirebaseFirestore db;
@@ -84,9 +84,26 @@ public class profile extends BaseSensorActivity {
         tvPostCount = findViewById(R.id.tvPostCount);
         tvFriendCount = findViewById(R.id.tvFriendCount);
         btnEditAvatar = findViewById(R.id.btnEditAvatar);
+        btnLogout = findViewById(R.id.btnLogout);
         rvProfileGrid = findViewById(R.id.rvProfileGrid);
         // Bấm nút sửa Avatar thì mở thư viện ảnh
         btnEditAvatar.setOnClickListener(v -> mGetContent.launch("image/*"));
+        
+        // Sự kiện Đăng xuất
+        btnLogout.setOnClickListener(v -> {
+            new android.app.AlertDialog.Builder(this)
+                .setTitle("Đăng xuất")
+                .setMessage("Bạn có chắc chắn muốn đăng xuất không?")
+                .setPositiveButton("Đồng ý", (dialog, which) -> {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(this, DangNhapActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+        });
     }
     // ── HÀM LOAD THÔNG TIN USER ──
     private void loadUserInfo() {

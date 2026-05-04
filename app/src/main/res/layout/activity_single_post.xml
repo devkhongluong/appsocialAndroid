@@ -29,6 +29,21 @@
             android:text="Chi tiết bài viết"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <!-- View trống dùng để đẩy icon Xóa sang bên phải -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/btnDeletePost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_delete"
+            android:tint="#FF0000"
+            android:visibility="gone" />
     </LinearLayout>
 
     <!-- Chúng ta tận dụng luôn RecyclerView kết hợp PostAdapter có sẵn để render 1 bài post -->

@@ -59,7 +59,7 @@ public class ListFriendsChatActivity extends AppCompatActivity {
             // Already here
         });
         findViewById(R.id.btnNavProfile).setOnClickListener(v -> {
-            // startActivity(new Intent(this, ProfileActivity.class));
+             startActivity(new Intent(this, profile.class));
         });
     }
 
