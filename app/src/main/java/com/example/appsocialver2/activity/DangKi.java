@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +20,12 @@ import java.util.HashMap;
 public class DangKi extends AppCompatActivity {
     EditText edtEmail, edtOTP, edtPass, edtPass2, edtTen;
     Button btnDangKy, btnOTP;
-    TextView errorEmail, errorPass, errorPass2;
+    TextView errorEmail, errorPass, errorPass2, tvBack;
+    ImageButton imgAn, imgAn2;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
+    boolean isPass = false;
+    boolean isPass2 = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,7 @@ public class DangKi extends AppCompatActivity {
         errorPass = findViewById(R.id.errorPass);
         errorPass2 = findViewById(R.id.errorPass2);
         edtTen = findViewById(R.id.edtTen);
+        tvBack = findViewById(R.id.tvBack);
         //ẩn đi cái lỗi
         errorEmail.setVisibility(View.GONE);
         errorPass.setVisibility(View.GONE);
@@ -50,7 +55,32 @@ public class DangKi extends AppCompatActivity {
         btnOTP.setOnClickListener(v -> {
             sendOTP();
         });
-
+        tvBack.setOnClickListener(view -> {
+            Intent intent = new Intent(this, DangNhapActivity.class);
+            startActivity(intent);
+        });
+        findViewById(R.id.imgAn).setOnClickListener(view -> {
+            if(isPass){
+                imgAn.setImageResource(R.drawable.matnham);
+                edtPass.setInputType(129);
+                isPass = false;
+            }else{
+                imgAn.setImageResource(R.drawable.matmo);
+                edtPass.setInputType(144);
+                isPass = true;
+            }
+        });
+        findViewById(R.id.imgAn2).setOnClickListener(view -> {
+            if(isPass2){
+                imgAn2.setImageResource(R.drawable.matnham);
+                edtPass2.setInputType(129);
+                isPass2 = false;
+            }else{
+                imgAn2.setImageResource(R.drawable.matmo);
+                edtPass2.setInputType(144);
+                isPass2 = true;
+            }
+        });
     }
     private void registerUser() {
         if (!validateInput()) return;

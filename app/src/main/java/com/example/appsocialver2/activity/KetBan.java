@@ -81,12 +81,10 @@ public class KetBan extends AppCompatActivity {
                 .addOnSuccessListener(friendDocs -> {
                     friendIds.clear();
                     for (DocumentSnapshot doc : friendDocs) {
-                        // Lấy ID của document - chính là mã 8SVog... của người bạn
+                        // Lấy ID của document
                         friendIds.add(doc.getId().trim());
                     }
-
                     Log.d("DEBUG_KB", "Số lượng bạn bè tìm thấy: " + friendIds.size());
-
                     // 2. Lấy danh sách đã gửi lời mời (friend_requests)
                     db.collection("friend_requests")
                             .whereEqualTo("fromUserId", currentUid)
@@ -119,7 +117,6 @@ public class KetBan extends AppCompatActivity {
                         String tendn = doc.getString("tendn");
                         if (tendn != null && tendn.toLowerCase().contains(keyword.toLowerCase())) {
                             String userId = doc.getId(); // ID dài 8SVog...
-
                             if (userId.equals(currentUid)) continue;
 
                             String email = doc.getString("email");

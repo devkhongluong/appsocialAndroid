@@ -1,16 +1,20 @@
 package com.example.appsocialver2.Models;
 import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 public class Post {
     private String postId;
     private String ownerUid;
     private String imageUrl;
     private String description;
     private String locationName; // Lưu tên địa danh từ GPS
+    private List<String> likes = new ArrayList<>(); // Danh sách người thả tim
 
     @ServerTimestamp
     private Date timestamp; // Thời gian đăng bài tự động từ server [cite: 98]
-
     // Bắt buộc phải có Constructor trống để Firebase Firestore có thể chuyển đổi dữ liệu [cite: 49]
     public Post() {}
 
@@ -23,6 +27,9 @@ public class Post {
     }
 
     // Getter và Setter
+    public List<String> getLikes() { return likes; }
+    public void setLikes(List<String> likes) { this.likes = likes; }
+
     public String getPostId() { return postId; }
     public void setPostId(String postId) { this.postId = postId; }
     public String getOwnerUid() { return ownerUid; }

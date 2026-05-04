@@ -64,4 +64,6 @@ dependencies {
     implementation("androidx.camera:camera-view:$camerax_version")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+    // Thêm vào khối dependencies
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 }

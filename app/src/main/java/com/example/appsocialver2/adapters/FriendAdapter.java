@@ -1,6 +1,7 @@
 package com.example.appsocialver2.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.appsocialver2.Models.User;
 import com.example.appsocialver2.R;
+import com.example.appsocialver2.activity.ChatActivity;
 
 import java.util.List;
 
@@ -65,7 +67,11 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         }
 
         holder.btnNhanTin.setOnClickListener(v -> {
-            //Intent
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra("userId", user.userId);
+            intent.putExtra("userName", user.tendn);
+            intent.putExtra("userAvatar", user.avatar);
+            context.startActivity(intent);
         });
     }
 

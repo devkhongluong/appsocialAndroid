@@ -1,6 +1,7 @@
 package com.example.appsocialver2.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.appsocialver2.Models.User;
 import com.example.appsocialver2.R;
+import com.example.appsocialver2.activity.ChatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -60,44 +62,41 @@ public class KetBanAdapter extends RecyclerView.Adapter<KetBanAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         User user = list.get(position);
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
         holder.tvName.setText(user.tendn);
-
         Glide.with(context)
                 .load(user.avatar != null && !user.avatar.isEmpty() ? user.avatar : R.drawable.account)
                 .placeholder(R.drawable.account)
                 .circleCrop()
                 .into(holder.imgAvatar);
-
-        // --- RESET VIEW (Quan trọng để tránh lỗi hiển thị sai khi scroll) ---
+        //RESET VIEW
         holder.btnAdd.setVisibility(View.VISIBLE);
         holder.btnAdd.setEnabled(true);
         holder.btnAdd.setText("Kết bạn");
-        // Đặt màu mặc định (ví dụ màu xanh)
-
-
+        //kểm tra chính mình
         if (user.userId.equals(currentUserId)) {
             holder.btnAdd.setVisibility(View.GONE);
             return;
         }
-
-        // 2. Kiểm tra nếu đã là bạn bè (So sánh ID chuỗi dài)
+        //Kiểm tra nếu đã là bạn bè
         if (friendIds != null && friendIds.contains(user.userId)) {
-            holder.btnAdd.setText("Bạn bè");
-            holder.btnAdd.setEnabled(false);
-
+            holder.btnAdd.setText("Nhắn tin");
+            holder.btnAdd.setOnClickListener(view -> {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("userId", user.userId);
+                intent.putExtra("userName", user.tendn);
+                intent.putExtra("userAvatar", user.avatar);
+                context.startActivity(intent);
+            });
             return;
         }
-
-        // 3. Kiểm tra nếu đã gửi lời mời (Đang chờ - Pending)
+        // Kiểm tra nếu đã gửi lời mời
         if (requestedIds != null && requestedIds.contains(user.userId)) {
             holder.btnAdd.setText("Đã gửi");
             holder.btnAdd.setEnabled(false);
 
             return;
         }
-
-        // 4. Mặc định: Có thể kết bạn
+        //có thể kết bạn
         holder.btnAdd.setOnClickListener(v -> {
             guiLoiMoi(user, holder, position, currentUserId);
         });
