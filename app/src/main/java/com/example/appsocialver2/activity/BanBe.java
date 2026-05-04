@@ -72,6 +72,10 @@ public class BanBe extends AppCompatActivity {
             Intent intent = new Intent(this, CaNhanActivity.class);
             startActivity(intent);
         });
+        chat.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ListFriendsChatActivity.class);
+            startActivity(intent);
+        });
     }
     private void loadRequests() {
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();

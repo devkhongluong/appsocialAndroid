@@ -102,4 +102,13 @@ public class DangNhapActivity extends AppCompatActivity {
         errorEmail.setVisibility(View.GONE);
         errorPass.setVisibility(View.GONE);
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+    }
 }

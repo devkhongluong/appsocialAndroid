@@ -101,8 +101,7 @@
         android:orientation="horizontal"
         android:padding="12dp">
 
-        <!-- Icon Like (tạm dùng matmo) -->
-
+        <!-- Icon Like -->
         <ImageView
             android:id="@+id/btnLike"
             android:layout_width="24dp"
@@ -119,23 +118,30 @@
             android:textColor="#333"
             android:textStyle="bold" />
 
-        <!-- Icon Comment -->
-        <ImageView
-            android:id="@+id/btnComment"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="20dp"
-            android:src="@drawable/messenger"
-            app:tint="#555" />
-
-        <TextView
-            android:id="@+id/tvCommentCount"
-            android:layout_width="wrap_content"
+        <!-- Ô nhập chat trực tiếp -->
+        <EditText
+            android:id="@+id/edtQuickMessage"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:text="5"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_rounded_chat_input"
+            android:hint="Nhắn tin cho tác giả..."
             android:textColor="#333"
-            android:textStyle="bold" />
+            android:textColorHint="#888"
+            android:textSize="14sp"
+            android:inputType="textShortMessage"
+            android:maxLines="1"/>
+
+        <!-- Nút gửi tin nhắn -->
+        <ImageView
+            android:id="@+id/btnSendQuickMessage"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_send"
+            android:padding="4dp"
+            app:tint="#0084FF" />
 
     </LinearLayout>
 

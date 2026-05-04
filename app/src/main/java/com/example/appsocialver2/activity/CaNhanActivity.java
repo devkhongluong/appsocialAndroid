@@ -2,6 +2,7 @@ package com.example.appsocialver2.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -119,8 +120,7 @@ public class CaNhanActivity extends AppCompatActivity {
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
-                        Toast.makeText(this, "Lỗi tải bài viết cá nhân", Toast.LENGTH_SHORT).show();
-                        return;
+                        Log.e("Firestore", "Lỗi: ", error);
                     }
                     if (value != null) {
                         myPostList.clear();
